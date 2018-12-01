@@ -1,0 +1,7 @@
+#!/usr/bin/ruby
+
+freqTotal = 0
+while line = gets
+	freqTotal = freqTotal + line.to_i
+end
+puts freqTotal
