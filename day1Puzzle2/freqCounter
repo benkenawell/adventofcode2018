@@ -1,0 +1,16 @@
+#!/usr/bin/ruby
+
+def findFreq(file, freqTotal = 0, freqHash = {"0" => 1})
+	File.readlines(file).each do |line|
+		freqTotal = freqTotal + line.to_i
+		if freqHash[freqTotal.to_s] == nil
+			freqHash[freqTotal.to_s] = 1
+		else
+			return freqTotal
+		end
+	end
+	return findFreq(file, freqTotal, freqHash)
+end
+
+file = ARGV.first
+puts findFreq(file)
