@@ -1,0 +1,38 @@
+#!/usr/bin/ruby
+
+# the Levenshtein distance is what I want to measure here, I think
+# Hamming distance is probably an easier estimator for my purposes
+def hamming (s1, s2)
+	count = 0
+	s1.length.times do |i|
+		if s1[i] != s2[i]
+			count += 1
+		end
+	end
+	return count
+end
+
+# only prints out the characters that are the same in the strings
+def putsSame(line1, line2)
+	line1.length.times do |i|
+		if line1[i] == line2[i]
+			print(line1[i])
+		end
+	end
+end
+
+def iterate(file)
+	count = 0
+	File.readlines(file).each do |line1|
+		File.readlines(file).each do |line2|
+			if hamming(line1, line2) == 1
+				count += 1
+				putsSame(line1,line2)
+			end
+		end
+	end
+	return count/2
+end
+
+file = ARGV[0]
+puts iterate(file)
