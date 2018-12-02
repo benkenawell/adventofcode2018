@@ -1,0 +1,29 @@
+#!/usr/bin/ruby
+
+# create an array for the count of all the letters in the string
+def checksum(file)
+	twoCount = 0
+	hasTwo = false
+	threeCount = 0
+	hasThree = false
+	letters = "abcdefghijklmnopqrstuvwxyz"
+	File.readlines(file).each do |line|
+		hasTwo = false
+		hasThree = false
+		letters.each_char do |char|
+			count = line.count(char)
+			if count == 2
+				hasTwo = true 
+			end
+			if count == 3
+				hasThree = true
+			end
+		end
+		twoCount += hasTwo ? 1 : 0
+		threeCount += hasThree ? 1 : 0
+	end
+	return twoCount * threeCount
+end
+
+file = ARGV.first
+puts checksum(file)
