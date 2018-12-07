@@ -1,0 +1,17 @@
+#!/usr/bin/ruby
+
+file = ARGV[0]
+claims = Hash.new(0)
+File.readlines(file).each do |line|
+	a, id, col, row, width, height = line.split(%r{[#@,:x]}).map { |s| s.to_i }
+	for i in col..(col+width-1)
+		for j in row..(row+height-1)
+			claims[[i,j]] += 1
+		end
+	end
+end
+count = 0
+for i in claims
+	count += (i.last > 1) ? 1 : 0
+end
+puts count
