@@ -1,0 +1,27 @@
+#!/usr/bin/ruby
+
+file = ARGV[0]
+claims = Hash.new("")
+fullClaims = []
+claimsToPop= []
+File.readlines(file).each do |line|
+	a, id, col, row, width, height = line.split(%r{[#@,:x]}).map { |s| s.to_i }
+	fullClaims.push(id)
+	claimsToPop = []
+	for i in col..(col+width-1)
+		for j in row..(row+height-1)
+			claims[[i,j]] += id.to_s + ","
+			if claims[[i,j]].split(",").length > 1
+				claimsToPop.push claims[[i,j]].split(",").map { |s| s.to_i }
+			end
+		end
+	end
+	claimsToPop.each do |overlap|
+		overlap.each do |id|
+			fullClaims.delete(id)
+		end
+	end
+end
+puts fullClaims
+
+#still need to remove the id of the square they hit

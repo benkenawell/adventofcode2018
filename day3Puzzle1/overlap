@@ -11,7 +11,7 @@ File.readlines(file).each do |line|
 	end
 end
 count = 0
-for i in claims
+claims.each do |i|
 	count += (i.last > 1) ? 1 : 0
 end
 puts count
