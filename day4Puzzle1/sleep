@@ -1,0 +1,26 @@
+#!/usr/bin/ruby
+
+guards = Hash.new { Array.new }# hash key will be guard id.  Will hold an array of hashes pertinent to that guard.  Each has in the array will hold a date, minute, and action value that can be sorted and then read in order to create a chornology
+
+file = ARGV[0]
+id = 0
+# parse all of the input
+File.readlines(file).each do |line|
+	date = line[/[0-9-]+/]
+	minute = line[/:[0-9]+/][1..-1]
+	line.match "Guard" do |i|
+		id = line[/#[0-9]+/][1..-1].to_i
+		# there is a "begin shfit" action that needs added to the hash here
+	end
+	# if line.match? /] [a-z ]+$/
+	action = line[/[a-z ]+$/][1..-1]
+	guards[id] += [Hash["date" => date, "minute" => minute, "action" => action]]
+end
+ 
+# sort the input for each key
+for guard in guards
+	guards[guard.first] = guard.last.sort { |a,b| (a["date"] + " " + a["minute"]) <=> (b["date"] + " " + b["minute"]) }
+end
+puts guards
+
+# now count which guard slept the most, and in what minute he slept the most
